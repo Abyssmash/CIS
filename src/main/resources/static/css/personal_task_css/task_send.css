@@ -3,7 +3,7 @@ input:focus, textarea:focus {
 }
 section {
     width: 98%;
-    height: 67%;
+    height: 62%;
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
@@ -13,18 +13,21 @@ section {
 }
 .container{
     width: 1000px;
-    height: 600px;
-    display: inline-block;
+    height: 530px;
     border: 1px solid;
-    border-radius: 15px;
-    background-color: rgb(224, 224, 224);;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(224, 224, 224);
 }
 .task_detail_title{
     width: 800px;
     height: 60px;
     display: inline-block;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 .task_detail_title input{
     font-size: 30px;
@@ -35,7 +38,7 @@ section {
     display: flex;
     margin-left: 40px;
     text-align: center;
-    margin-left: 150px;
+    margin-left: 210px;
     align-items: center;
 }
 .select_emp select{
@@ -52,25 +55,13 @@ section {
     height: 50px;
     display: inline-block;
     margin-top: 20px;
-    margin-bottom: 20px;
 }
 .task_send_comment{
     width: 800px;
-    height: 350px;
+    height: 300px;
     background-color: aliceblue;
     display: inline-block;
     align-items: center;
-}
-footer{
-    width: 1250px;
-    height: 80px;
-    display: inline-block;
-    margin-left: 10px;
-    text-align: center;
-    margin-top: 30px;
-}
-.company_info{
-    color: rgb(88, 88, 88);
 }
 .send_button{
     width: 300px;

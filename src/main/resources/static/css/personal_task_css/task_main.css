@@ -3,12 +3,13 @@ input:focus, textarea:focus {
 }
 section {
     width: 98%;
-    height: 67%;
+    height: 62%;
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
     display: inline-block;
     align-items: center;
+    text-align: center;
 }
 .send_task_button{
     width: 100px;
@@ -21,13 +22,13 @@ section {
 }
 .progress_task{
     width: 550px;
-    height: 600px;
+    height: 550px;
     background-color: rgb(236, 235, 235);
     display: inline-block;
     margin-top: 10px;
     border-radius: 10px;
     border: 1px solid;
-    margin-left: 50px;
+    margin-left: 25px;
 }
 .progress_task h3{
     width: 50px;
@@ -38,11 +39,12 @@ section {
 }
 .complete_task{
     width: 550px;
-    height: 600px;
+    height: 550px;
     background-color: rgb(236, 235, 235);
     display: inline-block;
     margin-top: 10px;
     margin-left: 50px;
+    margin-right: 10px;
     border-radius: 10px;
     border: 1px solid;
 }
@@ -64,7 +66,7 @@ section {
     background-color:#808080;
     border-radius: 10px;
     text-align: center;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 .task_bin_frame{
     width: 520px;
@@ -73,7 +75,7 @@ section {
     background-color:#808080;
     border-radius: 10px;
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     text-align: center;
 }
 .task_receive{
@@ -83,6 +85,28 @@ section {
     display: inline-block;
     text-align: center;
     margin-top: 20px;
+}
+.starttask_date{
+    width: 150px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 15px;
+    display: inline-block;
+    background-color: #808080;
+}
+.starttask_date p{
+    margin-top: 5px;
+}
+.endtask_date{
+    width: 150px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 15px;
+    display: inline-block;
+    background-color: #808080;
+}
+.endtask_date p{
+    margin-top: 5px;
 }
 .task_buttons{
     margin-top: 15px;
@@ -120,24 +144,13 @@ section {
     height: 115px;
     border: 1px solid;
     text-align: center;
-    color: gray;
+    color: rgb(80, 79, 79);
 }
 .box4{
     height: 52px;
     border: 1px solid;
     text-align: center;
-    color: gray;
-}
-footer{
-    width: 1250px;
-    height: 80px;
-    display: inline-block;
-    margin-left: 10px;
-    text-align: center;
-    align-items: center;
-}
-.company_info{
-    color: rgb(88, 88, 88);
+    color:rgb(80, 79, 79);
 }
 .task_complete_button{
     margin-top: 15px;

@@ -9,14 +9,14 @@
     <insert id="insertOne" parameterType="com.cis.board.vo.boardVO">
         INSERT INTO board_table
         (category, board_num, board_title, board_content, create_at, emp_id, boardHits, fileAttached)
-        VALUES (#{category},(SELECT nextval3('board_seq') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
+        VALUES (#{category},(SELECT cis_seq('board_seq') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
     </insert>
 
 
     <insert id="insertOne_fr" parameterType="com.cis.board.vo.boardVO">
         INSERT INTO board_table
         (category, board_num, board_title, board_content, create_at, emp_id, boardHits, fileAttached)
-        VALUES (#{category},(SELECT nextval3('board_seq_fr') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
+        VALUES (#{category},(SELECT cis_seq('board_seq_fr') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
     </insert>
 
 
@@ -284,7 +284,7 @@
     <insert id="insertCommentOne" parameterType="com.cis.board.vo.commentVO">
         INSERT INTO comment
             (category, board_num, comment_num, comment_content,emp_id)
-        values (#{category},#{board_num},(SELECT nextval3('comment_seq') FROM DUAL),#{comment_content},#{emp_id})
+        values (#{category},#{board_num},(SELECT cis_seq('comment_seq') FROM DUAL),#{comment_content},#{emp_id})
     </insert>
 
     <!-- 댓글 가져오기  List<commentVO> selectAllCmt(Map<String, Object> params)throws Exception;-->

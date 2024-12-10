@@ -10,10 +10,10 @@ import java.util.List;
 public interface PersonalTaskService {
 
       // 업무 전송
-      void sendPersonalTask(PersonalTaskDTO taskDTO, HttpSession session) throws Exception;
+      void sendPersonalTask(PersonalTaskDTO taskDTO) throws Exception;
 
       // 받은 업무 목록 조회
-      List<PersonalTaskDTO> getReceivedTasks(String receive_id) throws Exception;
+      List<PersonalTaskDTO> getReceivedTasks(String receive_id, HttpSession session) throws Exception;
 
       // 상태에 따른 업무 목록 조회 (페이징 포함)
       List<PersonalTaskDTO> getTasksByStatus(String task_status, int page, int size);
@@ -25,7 +25,7 @@ public interface PersonalTaskService {
 //      void updateTaskStatus(int taskId);
 
       // 업무 파일 저장
-      void saveTaskFiles(int taskNum, List<MultipartFile> files, HttpSession session) throws Exception;
+      void saveTaskFiles(int taskNum, List<MultipartFile> files) throws Exception;
 
       // 파일 다운로드
       TaskFileDTO findTaskFileByTaskIdAndFileName(int task_num, String file_name);
@@ -42,4 +42,5 @@ public interface PersonalTaskService {
       // 업무 수행도 변경
       void updateTaskStatus(int task_num, String task_status);
 
+      List<PersonalTaskDTO> getReceivedTasks(String receiveId);
 }

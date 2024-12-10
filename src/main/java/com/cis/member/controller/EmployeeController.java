@@ -1,7 +1,12 @@
 package com.cis.member.controller;
 
 import com.cis.Pagination;
+import com.cis.attendance.dto.AttendanceDTO;
+import com.cis.attendance.service.IF_AttendanceService;
+import com.cis.board.paging.PagingResponse;
 import com.cis.board.service.IF_board_service;
+import com.cis.board.vo.boardVO;
+import com.cis.board.vo.searchDTO;
 import com.cis.member.dto.*;
 import com.cis.member.service.IF_MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +29,7 @@ public class EmployeeController {
     @Autowired
     IF_MemberService memberService;
     private final IF_board_service  ifboardservice;
+    private final IF_AttendanceService attendanceService;
 
     // 전체 로그인 (로그인 방식 선택.)
     @GetMapping(value="/")
@@ -45,7 +51,7 @@ public class EmployeeController {
 
     // 일반사원 로그인.
     @RequestMapping(value="employee_login_action")
-    public String employee_login_action(HttpServletRequest request) throws Exception {
+    public String employee_login_action(HttpServletRequest request, Model model) throws Exception {
         System.out.println("=== Employee/employee_login 진입 ===");
         String userId = request.getParameter("emp_id");
         String userPass = request.getParameter("emp_pass");
@@ -58,7 +64,42 @@ public class EmployeeController {
             session.setAttribute("emp_email", managerEmployeeDTO.getEmp_email());
             session.setAttribute("emp_dept", managerEmployeeDTO.getEmp_dept());
             session.setAttribute("emp_rank", managerEmployeeDTO.getEmp_rank());
-            session.setMaxInactiveInterval(5); // 세션 유효 시간을 10 분으로 설정.
+            session.setMaxInactiveInterval(600); // 세션 유효 시간을 10 분으로 설정.
+
+            // 메인화면 목록 리스트 출력하기
+            // 자유게시판
+            searchDTO params = new searchDTO();
+            params.setPage(1);
+            params.setRecordSize(3);
+            params.setPageSize(1);
+            PagingResponse<boardVO> boardvolist = ifboardservice.findAllPost_fr(params);
+//            if (boardvolist == null || boardvolist.getList() == null) {
+//                boardvolist = new PagingResponse<>();
+//                boardvolist.setList(new ArrayList<>()); // 빈 리스트로 초기화
+//            }
+
+
+            // 공지사항
+            searchDTO paramsg = new searchDTO();
+            paramsg.setPage(1);
+            paramsg.setRecordSize(3);
+            paramsg.setPageSize(1);
+            PagingResponse<boardVO> boardvolistg = ifboardservice.findAllPost(paramsg);
+            //
+
+            // 근태관리
+            Pagination pagination = new Pagination(6, 3, 1);
+            pagination.setStartIndex(0);
+            pagination.setPageSize(3);
+
+            List<AttendanceDTO> attendance_list = attendanceService.attendanceList(userId, pagination);
+
+            model.addAttribute("attendance_list", attendance_list);
+            model.addAttribute("boardvolist", boardvolist);
+            model.addAttribute("boardvolistg", boardvolistg);
+            // 개인업무
+
+
             return "main/emp_main";
         }
         return "Employee/employee_login";

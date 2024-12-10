@@ -1,12 +1,12 @@
 package com.cis.personal_task.service;
 
-import com.cis.member.dto.EmployeeDTO;
 import com.cis.member.dto.ManagerEmployeeDTO;
 import com.cis.member.repository.IF_MemberDao;
 import com.cis.personal_task.dto.PersonalTaskDTO;
 import com.cis.personal_task.dto.TaskFileDTO;
 import com.cis.personal_task.repository.PersonalTaskRepository;
 import com.cis.personal_task.repository.TaskFileRepository;
+import com.github.pagehelper.PageHelper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import com.github.pagehelper.PageHelper;
 
 @Service
 public class PersonalTaskServiceImpl implements PersonalTaskService {
@@ -40,7 +39,7 @@ public class PersonalTaskServiceImpl implements PersonalTaskService {
     }
 
     @Override
-    public void sendPersonalTask(PersonalTaskDTO taskDTO, HttpSession session) throws Exception {
+    public void sendPersonalTask(PersonalTaskDTO taskDTO) throws Exception {
         String receiveEmpId = taskDTO.getReceive_id();
 
         // ManagerEmployeeDTO에서 수신자 정보 조회
@@ -64,7 +63,7 @@ public class PersonalTaskServiceImpl implements PersonalTaskService {
 
     // 받은 업무 목록 조회
     @Override
-    public List<PersonalTaskDTO> getReceivedTasks(String receiveId) throws Exception {
+    public List<PersonalTaskDTO> getReceivedTasks(String receiveId, HttpSession session) throws Exception {
         if (receiveId == null || receiveId.isEmpty()) {
             throw new IllegalArgumentException("받는 사람 ID는 필수입니다.");
         }
@@ -73,7 +72,7 @@ public class PersonalTaskServiceImpl implements PersonalTaskService {
 
     // 업무 파일 저장
     @Override
-    public void saveTaskFiles(int task_num, List<MultipartFile> files, HttpSession session) throws Exception {
+    public void saveTaskFiles(int task_num, List<MultipartFile> files) throws Exception {
         if (files.size() > 3) {
             throw new IllegalArgumentException("최대 3개의 파일만 업로드 가능합니다.");
         }
@@ -127,6 +126,11 @@ public class PersonalTaskServiceImpl implements PersonalTaskService {
     @Override
     public void updateTaskStatus(int task_num, String task_status) {
         personalTaskRepository.updateTaskStatus(task_num, task_status);
+    }
+
+    @Override
+    public List<PersonalTaskDTO> getReceivedTasks(String receiveId) {
+        return List.of();
     }
 
     // 상태에 따른 업무 목록 조회 (페이징 포함)

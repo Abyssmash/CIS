@@ -310,7 +310,8 @@ public class BoardController {
         System.out.println(num + "  게시글넘버");
         ifboardservice.readBoard(num);
         //내용 옮기기
-        boardVO boardvo = ifboardservice.viewOne_fr(num);
+        boardVO boardvo = ifboardservice.viewOne(num);
+        //
         //게시판 id를 param으로 이름 return
         String emp_name = ifboardservice.getNameById(boardvo.getEmp_id());
         //게시판 id와 세션 로그인한 아이디 비교
@@ -350,7 +351,7 @@ public class BoardController {
 
     //자유게시판 글 보기 + file attached//
     @GetMapping(value = "/fr_preview/{board_num}")
-    public String fr_preview(@PathVariable("board_num") int num,
+    public String fr_preview(@PathVariable("board_num") Integer num,
                              Model model, HttpSession session) throws Exception {
 
         //세션 로그인 확인

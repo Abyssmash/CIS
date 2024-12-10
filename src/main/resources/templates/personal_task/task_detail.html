@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인 업무 상세화면</title>
+    <link rel="stylesheet" href="/static/css/layout/base.css">
+    <link rel="stylesheet" href="/static/css/personal_task_css/task_detail.css">
+</head>
+<body>
+<div class="main">
+    <header th:replace="layout/header.html::header"></header>
+    <nav th:replace="layout/nav.html::nav"></nav>
+    <section>
+        <div class="container">
+            <form>
+                <div class="task_detail_title">
+                    <input type="text" size="45px" name="task_title" th:value="${taskDetail.title}" readonly />
+                </div>
+                <div class="select_emp">
+                    <p>부서: <input type="text" size="10px" name="receive_dept" th:value="${taskDetail.receiveDept}" readonly /></p>
+                    <p>직급: <input type="text" size="10px" name="receive_rank" th:value="${taskDetail.receiveRank}" readonly /></p>
+                    <p>이름: <input type="text" size="10px" name="receive_emp" th:value="${taskDetail.receiveEmp}" readonly /></p>
+                </div>
+                <div class="file_name">
+                    <h4>첨부파일</h4>
+                </div>
+                <div class="receive_file">
+                    <div style="height: 50px; overflow-y: scroll">
+                        <ul>
+                            <li th:each="file : ${taskFiles}">
+                                <a th:href="@{'/tasks/download/' + ${file.taskNum} + '/' + ${file.fileName}}" th:text="${file.originalFileName}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task_receive_comment">
+                    <div style="height: 300px; overflow-y: scroll">
+                        <p th:text="${taskDetail.content}"></p>
+                    </div>
+                </div>
+                <div class="back_button">
+                    <button type="button">
+                        <a href="/tasks/task_main">
+                            <img src="/img/back.png" width="40" height="40" />
+                        </a>
+                    </button>
+                </div>
+            </form> <!-- 폼 태그 닫기 -->
+        </section>
+    </div> <!-- container div 닫기 -->
+    <footer th:replace="layout/footer.html::footer"></footer>
+</body>
+</html>

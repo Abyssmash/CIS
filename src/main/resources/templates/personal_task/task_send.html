@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>업무 전송</title>
+  <link rel="stylesheet" href="/CIS/personal_task/personal_task_base.css">
+  <link rel="stylesheet" href="/CIS/personal_task/task_send.css">
+</head>
+<body>
+<div class="main">
+  <header th:replace="layout/header.html::header"></header>
+  <nav th:replace="layout/nav.html::nav"></nav>
+  <section>
+    <form action="/tasks/send" method="post" enctype="multipart/form-data">
+      <div class="container">
+        <!-- 업무 제목 -->
+        <div class="task_detail_title">
+          <label for="task_title">업무 제목:</label>
+          <input type="text" size="45" name="task_title" id="task_title" placeholder="업무 제목을 입력하세요" required>
+        </div>
+        <!-- 수신자 정보 -->
+        <div class="select_emp">
+          <label for="department_type">부서 선택:</label>
+          <select name="emp_dept" id="department_type" required>
+            <option value="">부서 선택</option>
+            <option value="영업팀">영업팀</option>
+            <option value="개발팀">개발팀</option>
+            <option value="기술팀">기술팀</option>
+            <option value="기획팀">기획팀</option>
+            <option value="회계팀">회계팀</option>
+            <option value="인사팀">인사팀</option>
+          </select>
+          <label for="rank_type">직급 선택:</label>
+          <select name="emp_rank" id="rank_type" required>
+            <option value="">직급 선택</option>
+            <option value="인턴">인턴</option>
+            <option value="사원">사원</option>
+            <option value="대리">대리</option>
+            <option value="과장">과장</option>
+            <option value="팀장">팀장</option>
+            <option value="임원">임원</option>
+          </select>
+          <label for="name_emp">이름:</label>
+          <input type="text" name="emp_name" id="name_emp" placeholder="수신자 이름을 입력하세요" required>
+        </div>
+        <!-- 파일 첨부 -->
+        <div class="send_file">
+          <label>파일 첨부 (최대 3개):</label>
+          <input type="file" name="task_files" accept=".jpg,.png,.pdf,.docx">
+          <input type="file" name="task_files" accept=".jpg,.png,.pdf,.docx">
+          <input type="file" name="task_files" accept=".jpg,.png,.pdf,.docx">
+        </div>
+        <!-- 업무 내용 -->
+        <div class="task_send_comment">
+          <label for="task_content">업무 내용:</label>
+          <textarea name="task_content" id="task_content" cols="108" rows="10" placeholder="업무 내용을 입력하세요" required></textarea>
+        </div>
+        <!-- 전송 버튼 -->
+        <div class="send_button">
+          <button type="submit">보내기</button>
+        </div>
+      </div>
+    </form>
+  </section>
+  <footer th:replace="layout/footer.html::footer"></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>personal_task: 메인 화면</title>
+  <link rel="stylesheet" href="/CIS/personal_task/base.css">
+  <link rel="stylesheet" href="/CIS/personal_task/task_main.css">
+</head>
+<body>
+<div class="main">
+  <header>
+    <div class="header_left">
+      <a href="emp_main">
+        <img src="/CIS/image/회사 로고.jpg" alt="Logo" class="logo_img">
+        <div>
+          <span class="logo_text">○○○ Company</span>
+        </div>
+      </a>
+    </div>
+    <div class="header_right">
+      <div>
+        <span class="login_user">○○○ 님</span>
+      </div>
+      <form action="" method="">
+        <input type="button" value="로그아웃" class="logout_btn">
+      </form>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="email"><span>이메일</span></a></li>
+      <li><a href=""><span>게시판</span></a></li>
+      <li><a href=""><span>근태관리</span></a></li>
+      <li><a href="personal_task"><span>개인업무</span></a></li>
+    </ul>
+  </nav>
+  <section>
+    <div class="task_container">
+      <div class="task_btn">
+        <form th:action="@{/tasks/{taskId}/complete(taskId=${task.taskId})}" method="post">
+          <input type="button" value="업무 완료 체크" class="task_check">
+        </form>
+        <form th:action="@{/tasks/send}" method="post">
+          <a href="task_send.html">
+            <input type="button" value="업무보내기" class="task_send">
+          </a>
+        </form>
+        <form th:action="@{/tasks(status=${'전체보기'})}" method="get">
+          <input type="submit" value="전체보기" class="task_allread">
+        </form>
+        <form th:action="@{/tasks(status=${'진행'})}" method="get">
+          <input type="submit" value="진행중인 업무" class="task_progress">
+        </form>
+        <form th:action="@{/tasks(status=${'완료'})}" method="get">
+          <input type="submit" value="완료한 업무" class="task_complete">
+        </form>
+      </div>
+      <div class="task_list">
+        <table class="task_table">
+          <thead>
+          <tr>
+            <td style="width: 5%;"><input type="checkbox" class="all_check"></td>
+            <td style="width: 58%;">제목</td>
+            <td style="width: 12%;">보낸 사람</td>
+            <td style="width: 13%;">날짜 / 시간</td>
+            <td style="width: 12%;">업무 상태</td>
+          </tr>
+          </thead>
+          <tbody id="task_content">
+          <tr th:each="task : ${tasks}">
+            <td><input type="checkbox" class="one_check"></td>
+            <td><a th:href="@{/tasks/detail/{taskId}(taskId=${task.taskId})}" th:text="${task.taskTitle}"></a></td>
+            <td th:text="${task.senderId}"></td>
+            <td th:text="${task.createdAt}"></td>
+            <td th:text="${task.taskStatus}"></td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr class="paging">
+            <td colspan="5">
+              <!-- 페이징 -->
+              <div>
+                <a th:if="${currentPage > 1}" th:href="@{/tasks(status=${param.status}, page=${currentPage - 1})}">이전</a>
+                <span th:text="'Page ' + ${currentPage}"></span>
+                <a th:href="@{/tasks(status=${param.status}, page=${currentPage + 1})}">다음</a>
+              </div>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="company_info">
+      <p style="font-size:12px">서울특별시 00구 00로 000</p>
+      <p style="font-size:12px">사업자등록번호: 000-00-00000</p>
+      <p style="font-size:12px">대표이사: 이개발</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

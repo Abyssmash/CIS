@@ -1,6 +1,7 @@
 package com.cis.member.controller;
 
 import com.cis.Pagination;
+import com.cis.board.service.IF_board_service;
 import com.cis.member.dto.*;
 import com.cis.member.service.IF_MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class EmployeeController {
 
     @Autowired
     IF_MemberService memberService;
+    private final IF_board_service  ifboardservice;
 
     // 전체 로그인 (로그인 방식 선택.)
     @GetMapping(value="/")
@@ -107,7 +109,11 @@ public class EmployeeController {
         if (check_result) {
             HttpSession session = request.getSession();
 //            session.setAttribute("emp_name","관리자"); // 관리자 세션 추가.
-            session.setAttribute("emp_name","admin"); // 관리자 세션 추가.
+//            session.setAttribute("emp_name","admin"); // 관리자 세션 추가.
+            session.setAttribute("admin","admin"); // 관리자 세션 추가
+            String emp_id = (String) session.getAttribute("admin");
+            String emp_name = ifboardservice.getNameById(emp_id);
+            session.setAttribute("emp_name", emp_name);
             return "main/manager_main"; // 비밀번호 참 : 관리자 메인화면으로 이동.
         } else {
             return "redirect:check_manager_pass"; // 비밀번호 거짓 : 관리자 비밀번호 입력창으로 이동.

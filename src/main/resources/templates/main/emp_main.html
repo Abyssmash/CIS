@@ -25,58 +25,51 @@
                 </div>
                 <div>
                     <span class="my_email" th:text="|이메일 : ${session.emp_email}|"></span>
-                    <!-- 추가끝 -->
                 </div>
             </div>
             <div class="profile_btn">
                 <a href="email"><img src="/img/mail.png" alt="Email"></a>
                 <a href="attendance"><img src="/img/time.png" alt="Attendance"></a>
-                <a href=""><img src="/img/page.png" alt="Personal_Task"></a>
+                <a href="tasks"><img src="/img/page.png" alt="Personal_Task"></a>
             </div>
         </aside>
         <section>
             <div class="list_one">
-                <a href=""><span class="list_label">게시판</span></a>
+                <a href="board_fr"><span class="list_label">자유게시판</span></a>
                 <div class="list_container">
-                    <!-- 게시판 목록(최신) 3개 -->
+<!--                     게시판 목록(최신) 3개-->
                     <table>
                         <thead>
-                        <tr id="board_empty">
-                            <td class="empty" colspan="2">게시글이 존재하지 않습니다.</td>
-                        </tr>
+                            <tr id="board_empty" th:if="${boardvolist == null or #lists.isEmpty(boardvolist.list)}">
+                                <td class="empty" colspan="2">게시글이 존재하지 않습니다.</td>
+                            </tr>
                         </thead>
-                        <tbody id="board_list">
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">최신 게시글 제목</a></td>
-                            <td class="td_two"><a href="" class="td_link">24-11-21</a></td>
-                        </tr>
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">게시글 제목은 총 20글자입니다.</a></td>
-                            <td class="td_two"><a href="" class="td_link">24-11-21</a></td>
-                        </tr>
+                        <tbody id="board_list" th:if="${boardvolist != null and !#lists.isEmpty(boardvolist.list)}">
+                            <tr th:each="frlist: ${boardvolist.list}">
+
+                                <td class="td_one"><a th:href="@{/fr_preview/{board_num}(board_num=${frlist.board_num})}" th:text="${frlist.board_title}"></a></td>
+                                <td th:text="${frlist.create_at}" class="td_two"></td>
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="list_one">
-                <a href=""><span class="list_label">공지사항</span></a>
+                <a href="board_gj"><span class="list_label">공지사항</span></a>
                 <div class="list_container">
                     <!-- 게시판 목록(공지사항) 3개 -->
                     <table>
                         <thead>
-                        <tr id="notice_empty">
-                            <td class="empty" colspan="2">공지사항이 존재하지 않습니다.</td>
-                        </tr>
+                            <tr id="notice_empty" th:if="${boardvolistg == null or #lists.isEmpty(boardvolistg.list)}">
+                                <td class="empty" colspan="2">공지사항이 존재하지 않습니다.</td>
+                            </tr>
                         </thead>
-                        <tbody id="notice_list">
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">최신 공지사항 제목</a></td>
-                            <td class="td_two"><a href="" class="td_link">24-11-21</a></td>
-                        </tr>
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">공지사항 제목은 총 20글자입니다.</a></td>
-                            <td class="td_two"><a href="" class="td_link">24-11-21</a></td>
-                        </tr>
+                        <tbody id="notice_list" th:if="${boardvolistg != null and !#lists.isEmpty(boardvolistg.list)}">
+                            <tr th:each="glist: ${boardvolistg.list}">
+                                <td class="td_one"><a th:href="@{/gj_preview/{board_num}(board_num=${glist.board_num})}" class="td_link" th:text="${glist.board_title}"></a></td>
+                                <td class="td_two" th:text="${glist.create_at}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -87,47 +80,41 @@
                     <!-- 근태관리 목록 3개 -->
                     <table>
                         <thead>
-                        <tr id="attendance_empty">
-                            <td class="empty" colspan="2">근무기록이 존재하지 않습니다.</td>
-                        </tr>
+                            <tr id="attendance_empty">
+                                <td class="empty" colspan="2">근무기록이 존재하지 않습니다.</td>
+                            </tr>
                         </thead>
                         <tbody id="attendance_list">
-                        <tr th:each="attendance : ${attendance_list}">
-                            <!-- 날짜 -->
-                            <td class="td_one" th:text="${attendance.work_date}"></td>
-                            <!-- 특이사항, null값이면 '-'로 표기 -->
-                            <td class="td_two" th:if="${#strings.isEmpty(attendance.significant)}">-</td>
-                            <td class="td_two" th:unless="${#strings.isEmpty(attendance.significant)}" th:text="${attendance.significant}"></td>
-                        </tr>
-                        <!--
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">2024-11-21</a></td>
-                            <td class="td_two"><a href="" class="td_link">-</a></td>
-                        </tr>
-                        -->
+                            <tr th:each="attendance : ${attendance_list}">
+                                <!-- 날짜 -->
+                                <td class="td_one" th:text="${attendance.work_date}"></td>
+                                <!-- 특이사항, null값이면 '-'로 표기 -->
+                                <td class="td_two" th:if="${#strings.isEmpty(attendance.significant)}">-</td>
+                                <td class="td_two" th:unless="${#strings.isEmpty(attendance.significant)}" th:text="${attendance.significant}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="list_one">
-                <a href=""><span class="list_label">개인업무</span></a>
+                <a href="tasks"><span class="list_label">개인업무</span></a>
                 <div class="list_container">
                     <!-- 개인업무 목록 3개 -->
                     <table>
                         <thead>
-                        <tr id="personal_task_empty">
-                            <td class="empty" colspan="2">개인업무가 존재하지 않습니다.</td>
-                        </tr>
+                            <tr id="personal_task_empty">
+                                <td class="empty" colspan="2">개인업무가 존재하지 않습니다.</td>
+                            </tr>
                         </thead>
                         <tbody id="personal_task_list">
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">개인업무 제목</a></td>
-                            <td class="td_two"><a href="" class="td_link">진행</a></td>
-                        </tr>
-                        <tr>
-                            <td class="td_one"><a href="" class="td_link">개인업무 제목은 총 20글자입니다.</a></td>
-                            <td class="td_two"><a href="" class="td_link">완료</a></td>
-                        </tr>
+                            <tr>
+                                <td class="td_one"><a href="" class="td_link">개인업무 제목</a></td>
+                                <td class="td_two"><a href="" class="td_link">진행</a></td>
+                            </tr>
+                            <tr>
+                                <td class="td_one"><a href="" class="td_link">개인업무 제목은 총 20글자입니다.</a></td>
+                                <td class="td_two"><a href="" class="td_link">완료</a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

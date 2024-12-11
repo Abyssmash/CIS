@@ -14,6 +14,8 @@ let significant_btn = document.getElementsByClassName("significant_btn")[0];
 let significant_select_box = document.getElementById("significant");
 
 let check_val = false;
+let work_start_check_val = 0;
+let work_end_check_val = 0;
 
 window.onload = () => {
     if (attendance_row.rows.length <= 0) {
@@ -23,41 +25,83 @@ window.onload = () => {
         attendance_empty.style.display = "none";
     }
 
-    if (attendance_row.rows.length > 0) {
-        if (attendance_row.rows[0].cells[0].innerText === now_date) {
-            if (!(attendance_row.rows[0].cells[2].innerText === "-")) {
-                work_end.style.display = "none";
-
-                const text = document.createElement("p");
-                text.style.fontSize = "40px";
-                text.style.fontWeight = "bold";
-                text.innerText = "수고하셨습니다.";
-
-                commute_container.appendChild(text);
-
-                significant_select_box.disabled = "disabled";
-                significant_btn.disabled = "disabled";
-                significant_btn.style.display = "none";
-            }
-            work_start.style.display = "none";
+    if (attendanceWorkStartCheck() > 0) {
+        if (!(attendanceWorkEndCheck() > 0)) {
+            attendanceHiddenElement();
         } else {
-            work_end.style.display = "none";
-            significant_select_box.disabled = "disabled";
-            significant_btn.disabled = "disabled";
+            work_start.style.display = "none";
         }
-    }
-
-    if (work_start.style.display === "") {
+    } else {
+        work_end.style.display = "none";
         significant_select_box.disabled = "disabled";
         significant_btn.disabled = "disabled";
-        significant_btn.style.display = "none";
     }
+}
+
+function attendanceWorkStartCheck() {
+    let result_check = 0;
+    $.ajax({
+        type : "GET",
+        url : "/attendance/work_start/check",
+        async : false,
+        data : {
+            "now_date" : now_date
+        },
+        success : function(check) {
+            if (check > 0) {
+                work_start_check_val = check;
+                result_check = check;
+            }
+        },
+        error : function() {
+            alert("서버 요청 실패");
+        }
+    });
+    return result_check;
+}
+
+function attendanceWorkEndCheck() {
+    let result_check = 0;
+    $.ajax({
+        type : "GET",
+        url : "/attendance/work_end/check",
+        async : false,
+        data : {
+            "now_date" : now_date
+        },
+        success : function(check) {
+            if (check > 0) {
+                work_end_check_val = check;
+                result_check = check;
+            }
+        },
+        error : function() {
+            alert("서버 요청 실패");
+        }
+    });
+    return result_check;
+}
+
+function attendanceHiddenElement() {
+    work_end.style.display = "none";
+
+    const text = document.createElement("p");
+    text.style.fontSize = "40px";
+    text.style.fontWeight = "bold";
+    text.innerText = "수고하셨습니다.";
+
+    commute_container.appendChild(text);
+
+    significant_select_box.disabled = "disabled";
+    significant_btn.disabled = "disabled";
+    significant_btn.style.display = "none";
+
+    work_start.style.display = "none";
 }
 
 work_start.addEventListener("click", () => {
     if (attendance_row.rows.length > 0) {
-        let check_date = attendance_row.rows[0].cells[0].innerText;
-        if (check_date === now_date) {
+        if (work_start_check_val > 0) {
             alert("이미 출근 처리 되었습니다.\n출근 내역을 확인해주세요.");
             return;
         }
@@ -135,11 +179,11 @@ function work_end_check() {
     if (attendance_row.rows.length > 0) {
         let check_date = attendance_row.rows[0].cells[0].innerText;
         let check_end_time = attendance_row.rows[0].cells[2].innerText;
-        if (!(check_date === now_date)) {
+        if (!(work_start_check_val > 0)) {
             alert("금일 출근 내역이 존재하지 않습니다.");
             return check_val = true;
         }
-        if (check_date === now_date && !(check_end_time === "-")) {
+        if (!(work_end_check_val > 0) && !(check_end_time === "-")) {
             alert("이미 퇴근 처리 되었습니다.\n퇴근 내역을 확인해주세요.");
             return check_val = true;
         }

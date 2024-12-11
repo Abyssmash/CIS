@@ -5,7 +5,7 @@
 
     <insert id="emailInsert" parameterType="EmailDTO">
         INSERT INTO email
-            VALUES ((SELECT nextval('email_seq') FROM DUAL),
+            VALUES ((SELECT cis_seq('email_seq') FROM DUAL),
                 #{mail_title},
                 #{mail_content},
                 DEFAULT,

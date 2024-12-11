@@ -11,5 +11,7 @@ public interface IF_AttendanceService {
     public List<AttendanceDTO> attendanceList(Object login_emp, Pagination pagination) throws Exception;
     public void attendanceMod(AttendanceDTO attendanceDTO) throws Exception;
     public int attendanceListCnt(Object login_emp) throws Exception;
+    public int attendanceWorkStartCheck(Object login_emp, String now_date) throws Exception;
+    public int attendanceWorkEndCheck(Object login_emp, String now_date) throws Exception;
 
 }

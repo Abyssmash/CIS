@@ -29,5 +29,13 @@
         SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
             ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp}
     </select>
+    <select id="attendanceWorkStartCheck" resultType="int">
+        SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp} AND a.work_date=#{now_date}
+    </select>
+    <select id="attendanceWorkEndCheck" resultType="int">
+        SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp} AND a.work_date=#{now_date} AND a.work_end IS NULL
+    </select>
 
 </mapper>

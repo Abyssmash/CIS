@@ -34,4 +34,14 @@ public class AttendanceService implements IF_AttendanceService {
         return attendanceRepository.attendanceSelectAllCnt(login_emp);
     }
 
+    @Override
+    public int attendanceWorkStartCheck(Object login_emp, String now_date) throws Exception {
+        return attendanceRepository.attendanceWorkStartCheck(login_emp, now_date);
+    }
+
+    @Override
+    public int attendanceWorkEndCheck(Object login_emp, String now_date) throws Exception {
+        return attendanceRepository.attendanceWorkEndCheck(login_emp, now_date);
+    }
+
 }

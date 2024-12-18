@@ -7,6 +7,8 @@ import com.cis.board.paging.PagingResponse;
 import com.cis.board.service.IF_board_service;
 import com.cis.board.vo.boardVO;
 import com.cis.board.vo.searchDTO;
+import com.cis.personal_task.dto.PersonalTaskDTO;
+import com.cis.personal_task.service.PersonalTaskService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class MainController {
     @Autowired
     private IF_AttendanceService attendanceService;
     private final IF_board_service ifboardservice;
+    private final PersonalTaskService personalTaskService;
 
     // 게시판, 근태관리, 개인업무 목록 조회, 직원 메인화면 페이지 이동
     @GetMapping(value = "emp_main")
@@ -51,10 +54,13 @@ public class MainController {
 
         List<AttendanceDTO> attendance_list = attendanceService.attendanceList(login_emp, pagination);
 
+        // 개인 업무
+        List<PersonalTaskDTO> MainTasks = personalTaskService.getMainTasks((String) login_emp);
+
         model.addAttribute("attendance_list", attendance_list);
         model.addAttribute("boardvolist", boardvolist);
         model.addAttribute("boardvolistg", boardvolistg);
-        // 개인업무
+        model.addAttribute("MainTasks", MainTasks);
 
 
         return "main/emp_main";

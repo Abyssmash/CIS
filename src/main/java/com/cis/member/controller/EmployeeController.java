@@ -9,6 +9,8 @@ import com.cis.board.vo.boardVO;
 import com.cis.board.vo.searchDTO;
 import com.cis.member.dto.*;
 import com.cis.member.service.IF_MemberService;
+import com.cis.personal_task.dto.PersonalTaskDTO;
+import com.cis.personal_task.service.PersonalTaskService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class EmployeeController {
     IF_MemberService memberService;
     private final IF_board_service ifboardservice;
     private final IF_AttendanceService attendanceService;
+    private final PersonalTaskService personalTaskService;
 
     // 전체 로그인 (로그인 방식 선택.)
     @GetMapping(value="/")
@@ -84,11 +87,12 @@ public class EmployeeController {
             pagination.setPageSize(3);
             List<AttendanceDTO> attendance_list = attendanceService.attendanceList(userId, pagination);
             // 개인업무
-
+            List<PersonalTaskDTO> MainTasks = personalTaskService.getMainTasks(userId);
 
             model.addAttribute("attendance_list", attendance_list);
             model.addAttribute("boardvolist", boardvolist);
             model.addAttribute("boardvolistg", boardvolistg);
+            model.addAttribute("MainTasks", MainTasks);
 
             return "main/emp_main";
         }

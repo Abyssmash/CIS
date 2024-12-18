@@ -3,168 +3,125 @@ input:focus, textarea:focus {
 }
 section {
     width: 98%;
-    height: 62%;
-    border: 1px solid black;
+    height: 61%;
+    border: 1px solid #CCCCCC;
     border-radius: 15px;
     padding: 10px;
-    display: inline-block;
+
+    display: flex;
+    justify-content: center;
     align-items: center;
+}
+.task_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+}
+.task_btn {
+    padding: 3px 10px 10px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.task_btn input {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px;
+    cursor: pointer;
+}
+.task_btn a{
+    text-decoration-line:none;
+}
+.task_check {
+    background-color: rgb(118, 145, 255);
+    color: white;
+    border: 1px solid rgb(118, 145, 255);
+}
+.task_check:hover {
+    background-color:rgb(179, 226, 238);
+    border: 1px solid rgb(179, 226, 238);
+}
+.task_send {
+    background-color: dodgerblue;
+    color: white;
+    border: 1px solid dodgerblue;
+}
+.task_send:hover, .task_view:hover, .task_allread:hover, .task_progress:hover, .task_complete:hover{
+    background-color: skyblue;
+    border: 1px solid skyblue;
+}
+.task_list {
+    border: 1px solid #CCCCCC;
+    text-decoration: none;
+}
+.task_table {
+    width: 100%;
+}
+.task_table thead, .task_table tbody, .task_table tfoot {
     text-align: center;
 }
-.send_task_button{
-    width: 100px;
-    height: 30px;
-    text-align: center;
-    border-radius: 10px;
-    display: inline-block;
-    margin-left: 400px;
-    padding-bottom: 20px;
+.task_table tr td {
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+    text-decoration: none;
 }
-.progress_task{
-    width: 550px;
-    height: 550px;
-    background-color: rgb(236, 235, 235);
-    display: inline-block;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: 1px solid;
-    margin-left: 25px;
+.task_table thead tr td {
+    font-size: 20px;
+    font-weight: bold;
 }
-.progress_task h3{
-    width: 50px;
-    height: 30px;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    margin-left: 220px;
+.task_content td a{
+    text-decoration: none;
 }
-.complete_task{
-    width: 550px;
-    height: 550px;
-    background-color: rgb(236, 235, 235);
-    display: inline-block;
-    margin-top: 10px;
-    margin-left: 50px;
-    margin-right: 10px;
-    border-radius: 10px;
-    border: 1px solid;
+.task_allread {
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
 }
-.complete_task h3{
+.task_progress {
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+.task_complete{
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+.task_table tbody tr:hover{
+    color: #666666;
+    font-weight: bold;
+    text-decoration: none;
+}
+/*.task_table tbody td:hover{*/
+/*    color: #666666;*/
+/*    */
+/*}*/
+.all_check, .one_check {
     width: 30px;
     height: 30px;
-    color: rgb(0, 39, 0);
-    text-align: center;
-    margin-left: 220px;
 }
-.task_list{
-    display: flex;
-    margin-bottom: 30px;
+.paging td a:hover, .paging td span:hover {
+    background-color: skyblue;
+    border: 1px solid skyblue;
 }
-.task_frame{
-    width: 520px;
-    height: 250px;
-    display: inline-block;
-    background-color:#808080;
-    border-radius: 10px;
-    text-align: center;
-    margin-left: 5px;
-}
-.task_bin_frame{
-    width: 520px;
-    height: 250px;
-    display: inline-block;
-    background-color:#808080;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-left: 5px;
-    text-align: center;
-}
-.task_receive{
-    width: 480px;
-    height: 170px;
-    background-color: aliceblue;
-    display: inline-block;
-    text-align: center;
-    margin-top: 20px;
-}
-.starttask_date{
-    width: 150px;
-    height: 30px;
-    border: 1px solid;
+.paging span, .paging a{
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
     border-radius: 15px;
+    padding: 5px 10px;
+    margin: 0 10px;
     display: inline-block;
-    background-color: #808080;
-}
-.starttask_date p{
-    margin-top: 5px;
-}
-.endtask_date{
-    width: 150px;
-    height: 30px;
-    border: 1px solid;
-    border-radius: 15px;
-    display: inline-block;
-    background-color: #808080;
-}
-.endtask_date p{
-    margin-top: 5px;
-}
-.task_buttons{
-    margin-top: 15px;
-    margin-left: 350px;
-    display: inline-block;
-}
-.end_frame{
-    width: 520px;
-    height: 250px;
-    display: inline-block;
-    background-color:#808080;
-    border-radius: 10px;
-    margin-left: 5px;
-    text-align: center;
-}
-.task_end{
-    width: 480px;
-    height: 170px;
-    background-color: aliceblue;
-    display: inline-block;
-    text-align: center;
-    margin-top: 20px;;
-}
-.box1{
-    height: 115px;
-    border: 1px solid;
-    text-align: center;
-}
-.box2{
-    height: 52px;
-    border: 1px solid;
-    text-align: center;
-}
-.box3{
-    height: 115px;
-    border: 1px solid;
-    text-align: center;
-    color: rgb(80, 79, 79);
-}
-.box4{
-    height: 52px;
-    border: 1px solid;
-    text-align: center;
-    color:rgb(80, 79, 79);
-}
-.task_complete_button{
-    margin-top: 15px;
-    margin-left: 400px;
-    display: inline-block;
-}
-.scroll::-webkit-scrollbar {
-    width: 10px;
-    padding: 15px 15px 15px 0;
-}
-.scroll::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 20px;
-}
-.scroll::-webkit-scrollbar-track {
-    border-bottom: 20px;
+    width: auto;
+    height: auto;
 }

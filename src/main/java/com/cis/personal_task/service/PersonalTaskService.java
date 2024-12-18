@@ -2,7 +2,9 @@ package com.cis.personal_task.service;
 
 import com.cis.personal_task.dto.PersonalTaskDTO;
 import com.cis.personal_task.dto.TaskFileDTO;
+import com.cis.personal_task.exception.FileUploadException;
 import com.github.pagehelper.Page;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,45 +13,25 @@ import java.util.List;
 
 public interface PersonalTaskService {
 
-      // 업무 전송
-      void sendPersonalTask(PersonalTaskDTO taskDTO) throws Exception;
-//      void sendPersonalTask(PersonalTaskDTO personalTaskDTO);
 
-      // 받은 업무 목록 조회
-      List<PersonalTaskDTO> getReceivedTasks(String receive_id) throws Exception;
-
-//      // 상태에 따른 업무 목록 조회 (페이징 포함)
-//      List<PersonalTaskDTO> getTasksByStatus(String task_status, int page, int size);
-
-      // 전체 업무 목록 조회 (페이징 포함)
-      List<PersonalTaskDTO> getAllTasks(int page, int size);
-
-      // 메인화면
+      // 수행도별 업무 리스트 가져오기
       List<PersonalTaskDTO> getTasksByStatus(String task_status);
 
-//      // 메인화면 업무 목록
-//      List<PersonalTaskDTO> getMainList(int page, int size);
+      // 메인 화면 가져오기
+      List<PersonalTaskDTO> getMainTasks(String emp_id);
 
-//      // 업무 상태 변경 (진행 -> 완료)
-//      void updateTaskStatus(int taskId);
+      // 업무 전송 (업무 데이터 삽입 및 파일 첨부)
+      void sendTask(PersonalTaskDTO personalTaskDTO, List<MultipartFile> files) throws FileUploadException;
 
-      // 업무 파일 저장
-      void saveTaskFiles(int taskNum, List<MultipartFile> files) throws Exception;
+      // 받는 사람 ID 유효성 검사
+      boolean checkReceiveId(String receiveId);
 
-      // 파일 다운로드
-      TaskFileDTO findTaskFileByTaskIdAndFileName(int task_num, String file_name);
+      // 업무 상세 조회
+      PersonalTaskDTO getTaskDetail(int taskNum);
 
-      // 업무 상세보기
-      PersonalTaskDTO getTaskDetails(int task_num);
+      // 업무 상태를 '완료'로 변경
+      void updateTaskStatusToComplete(int taskNum);
 
-      // 업무 파일 가져오기
-      List<TaskFileDTO> getTaskFiles(int task_num);
-
-      // 받은 업무 목록을 페이징 처리하여 조회
-      List<PersonalTaskDTO> getReceivedTasksWithPagination(String receive_id, int page, int size);
-
-      // 업무 수행도 변경
-      void updateTaskStatus(int task_num, String task_status);
-
-      List <PersonalTaskDTO> getMainTasks(String receive_id);
 }
+
+

@@ -13,22 +13,25 @@
   <nav th:replace="~{layout/nav::nav}"></nav>
   <section>
     <div class="task_container">
-      <div class="task_btn" th:each="task : ${tasks}">
-        <form th:action="@{/tasks/{task_num}/complete(task_num=${task.task_num})}" method="post">
-          <input type="button" value="업무 완료 체크" class="task_check">
+      <div class="task_btn">
+        <!-- 업무 완료 체크 버튼 -->
+        <form th:action="@{/tasks/complete}" method="post">
+          <input type="submit" value="업무 완료 체크" class="task_check">
+          <input type="hidden" name="task_ids" th:value="${selectedTaskIds}">
         </form>
+        <!-- 업무 보내기 버튼 -->
         <form th:action="@{/tasks/send}" method="post">
-          <input type="button" value="업무보내기" class="task_send">
+          <input type="submit" value="업무보내기" class="task_send">
         </form>
-        <form th:action="@{/tasks(task_status=${'전체보기'})}" method="get">
-          <input type="submit" value="전체보기" class="task_allread">
-        </form>
-        <form th:action="@{/tasks(task_status=${'진행'})}" method="get">
-          <input type="submit" value="진행중인 업무" class="task_progress">
-        </form>
-        <form th:action="@{/tasks(task_status=${'완료'})}" method="get">
-          <input type="submit" value="완료한 업무" class="task_complete">
-        </form>
+        <a th:href="@{/tasks(status=${'전체보기'})}">
+          <input type="button" value="전체보기" class="task_allread">
+        </a>
+        <a th:href="@{/tasks(status=${'진행'})}">
+          <input type="button" value="진행중인 업무" class="task_progress">
+        </a>
+        <a th:href="@{/tasks(status=${'완료'})}">
+          <input type="button" value="완료한 업무" class="task_complete">
+        </a>
       </div>
       <div class="task_list">
         <table class="task_table">
@@ -46,7 +49,7 @@
             <td colspan="5" style="text-align: center;">받은 업무가 없습니다</td>
           </tr>
           <tr th:each="task : ${tasks}">
-            <td><input type="checkbox" class="one_check"></td>
+            <td><input type="checkbox" class="one_check" name="task_ids" th:value="${task.task_num}"></td>
             <td><a th:href="@{/tasks/task_detail/{task_num}(task_num=${task.task_num})}" th:text="${task.task_title}"></a></td>
             <td th:text="${task.directive_id}"></td>
             <td th:text="${task.create_at}"></td>
@@ -69,8 +72,8 @@
       </div>
     </div>
   </section>
-</div>
   <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
 <script src="/js/personal_task/task_main.js"></script>
 </body>
 </html>

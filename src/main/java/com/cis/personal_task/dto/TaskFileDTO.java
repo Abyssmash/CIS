@@ -15,7 +15,7 @@ public class TaskFileDTO {
     private LocalDateTime upload_at; // 파일 업로드 시간
 
     @Builder
-    public TaskFileDTO(int task_num, String file_name, String file_originname, LocalDateTime upload_at) {
+    public TaskFileDTO(int task_num, String file_name) {
         this.task_num = task_num;
         this.file_name = file_name;
         this.file_originname = file_originname;

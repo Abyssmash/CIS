@@ -12,44 +12,41 @@
     <header th:replace="~{layout/header::header}"></header>
     <nav th:replace="~{layout/nav::nav}"></nav>
     <section>
-        <div class="container">
-            <form>
-                <div class="task_detail_title">
-                    <input type="text" size="45px" name="task_title" th:value="${taskDetail.title}" readonly />
+        <div class="task_container">
+            <div class="task_content_top">
+                <div class="task_title">
+                    <span>제목</span>
+                    <!-- 업무 제목 표시 (읽기 전용) -->
+                    <input type="text" th:value="${task.task_title}" readonly>
                 </div>
-                <div class="select_emp">
-                    <p>부서: <input type="text" size="10px" name="receive_dept" th:value="${taskDetail.receiveDept}" readonly /></p>
-                    <p>직급: <input type="text" size="10px" name="receive_rank" th:value="${taskDetail.receiveRank}" readonly /></p>
-                    <p>이름: <input type="text" size="10px" name="receive_emp" th:value="${taskDetail.receiveEmp}" readonly /></p>
-                </div>
-                <div class="file_name">
-                    <h4>첨부파일</h4>
-                </div>
-                <div class="receive_file">
-                    <div style="height: 50px; overflow-y: scroll">
-                        <ul>
-                            <li th:each="file : ${taskFiles}">
-                                <a th:href="@{'/tasks/download/' + ${file.task_num} + '/' + ${file.file_name}}" th:text="${file.file_originname}"></a>
-                            </li>
-                        </ul>
+                <div class="task_people">
+                    <div class="task_directive">
+                        <span>발신인</span>
+                        <!-- 발신인 (읽기 전용) -->
+                        <input type="text" th:value="${task.directive_id}" readonly>
+                    </div>
+                    <div class="task_receive">
+                        <span>수신인</span>
+                        <!-- 수신인 (읽기 전용) -->
+                        <input type="text" th:value="${task.receive_id}" readonly>
                     </div>
                 </div>
-                <div class="task_receive_comment">
-                    <div style="height: 300px; overflow-y: scroll">
-                        <p th:text="${taskDetail.task_content}"></p>
-                    </div>
+            </div>
+            <div class="task_content_middle">
+                <textarea class="task_content" th:text="${task.task_content}" readonly></textarea>
+            </div>
+            <div class="task_content_bottom">
+                <div id="task_files" class="task_files">
+                    <!-- 첨부파일이 있는 경우 파일 리스트 출력 -->
+                    <th:block th:each="file : ${task.files}">
+                        <a th:href="@{/files/{fileName}(fileName=${file.file_name})}" th:text="${file.original_file_name}"></a>
+                    </th:block>
                 </div>
-                <div class="back_button">
-                    <button type="button">
-                        <img src="/img/back.png" width="40" height="40" />
-                        </a>
-                    </button>
-                </div>
-            </form> <!-- 폼 태그 닫기 -->
+            </div>
         </div>
     </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
 </div> <!-- container div 닫기 -->
-<footer th:replace="~{layout/footer::footer}"></footer>
 <script src="/js/personal_task/task_detail.js"></script>
 </body>
 </html>

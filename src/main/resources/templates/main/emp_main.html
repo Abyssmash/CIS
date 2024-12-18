@@ -102,19 +102,15 @@
                     <!-- 개인업무 목록 3개 -->
                     <table>
                         <thead>
-                            <tr id="personal_task_empty">
-                                <td class="empty" colspan="2">개인업무가 존재하지 않습니다.</td>
-                            </tr>
+                        <tr id="personal_task_empty">
+                            <td class="empty" colspan="2" th:if="${#lists.isEmpty(MainTasks)}">개인업무가 존재하지 않습니다.</td>
+                        </tr>
                         </thead>
                         <tbody id="personal_task_list">
-                            <tr>
-                                <td class="td_one"><a href="" class="td_link">개인업무 제목</a></td>
-                                <td class="td_two"><a href="" class="td_link">진행</a></td>
-                            </tr>
-                            <tr>
-                                <td class="td_one"><a href="" class="td_link">개인업무 제목은 총 20글자입니다.</a></td>
-                                <td class="td_two"><a href="" class="td_link">완료</a></td>
-                            </tr>
+                        <tr th:each="Task: ${MainTasks}">
+                            <td class="td_one" th:href="@{/tasks/detail/{task_num}(task_num=${Task.task_num})}" th:text="${Task.task_title}"></td>
+                            <td class="td_two" th:text="${Task.task_status}" ></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

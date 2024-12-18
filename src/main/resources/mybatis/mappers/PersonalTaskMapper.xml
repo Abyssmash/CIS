@@ -3,11 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cis.personal_task.repository.PersonalTaskRepository">
 
-    <!--업무 정보를 저장-->
+    <!-- 업무 삽입 -->
     <insert id="insertTask" parameterType="com.cis.personal_task.dto.PersonalTaskDTO">
-        INSERT INTO personal_task (task_num, task_title, task_content, directive_id, receive_id, create_at)
-        VALUES ( #{task_num},#{task_title}, #{task_content}, #{directive_id}, #{receive_id},#{create_at});
+        INSERT INTO personal_task (task_title, task_content, task_status, create_at, directive_id, receive_id)
+        VALUES (#{task_title}, #{task_content}, #{task_status}, #{create_at}, #{directive_id}, #{receive_id});
     </insert>
+
+    <!-- ID 유효성 검사 -->
+    <select id="existsReceiveId" resultType="int" parameterType="String">
+        SELECT COUNT(*)
+        FROM employee
+        WHERE emp_id = #{receiveId}
+    </select>
+
+    <!-- 업무 상세 정보 가져오기 -->
+    <select id="findTaskByTaskNum" parameterType="int" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
+        SELECT * FROM personal_task
+        WHERE task_num = #{taskNum}
+    </select>
+
+    <update id="updateTaskStatusToComplete" parameterType="int">
+        UPDATE personal_task
+        SET task_status = '완료'
+        WHERE task_num = #{taskNum}
+    </update>
 
     <!--최신 날짜 기준으로 받은 업무 가져오기-->
     <select id="getReceivedTasks" parameterType="string" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
@@ -26,13 +45,6 @@
             limit 0,3
     </select>
 
-    <!-- 업무 상세 조회 -->
-    <select id="findTaskById" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
-        SELECT *
-        FROM personal_task
-        WHERE task_num = #{task_num}
-    </select>
-
     <!--모든 업무 가져오기 (메인)-->
     <select id="findAllTasks" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
         SELECT task_num , task_title , directive_id , create_at , task_status
@@ -47,50 +59,6 @@
         WHERE task_status = #{task_status}
         ORDER BY create_at DESC
     </select>
-
-    <!--    &lt;!&ndash; 업무에 첨부된 파일 조회 &ndash;&gt;-->
-    <!--    <select id="findByTaskId" resultType="com.cis.personal_task.dto.TaskFileDTO">-->
-    <!--        SELECT *-->
-    <!--        FROM task_file-->
-    <!--        WHERE task_num = #{task_num}-->
-    <!--    </select>-->
-
-    <!-- 부서, 직급, 이름으로 사원 정보 조회 -->
-    <select id="findEmployeeByDeptRankName" parameterType="map" resultType="com.cis.member.dto.ManagerEmployeeDTO">
-        SELECT
-            m.emp_name, m.emp_dept, m.emp_rank,
-            m.join_date, m.resident_num
-        FROM
-            manager m
-        WHERE
-            m.emp_dept = #{empDept}
-          AND m.emp_rank = #{empRank}
-          AND m.emp_name = #{empName}
-    </select>
-
-    <!-- emp_id로 직원 정보 조회 -->
-    <select id="findEmployeeById" parameterType="String" resultType="com.cis.member.dto.EmployeeDTO">
-        SELECT
-            emp_id, emp_pass
-        FROM
-            employee
-        WHERE
-            emp_id = #{empId}
-    </select>
-    <!-- 페이징 처리된 받은 업무 목록 조회 -->
-    <select id="findReceivedTasksByReceiveId" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
-        SELECT *
-        FROM personal_task
-        WHERE receive_id = #{receiveId}
-        ORDER BY create_at DESC
-    </select>
-
-    <!--    &lt;!&ndash;업무 수행도 업데이트&ndash;&gt;-->
-    <!--    <update id="updateTaskStatus">-->
-    <!--        UPDATE personal_task-->
-    <!--        SET task_status = #{taskStatus}-->
-    <!--        WHERE task_num = #{task_num}-->
-    <!--    </update>-->
 
     <!-- 업무 상태에 따라 페이징된 업무 목록 조회 -->
     <select id="selectTasksByStatus" resultType="com.cis.personal_task.dto.PersonalTaskDTO">
@@ -115,5 +83,4 @@
         ORDER BY create_at DESC
             LIMIT #{limit} OFFSET #{offset}
     </select>
-
 </mapper>
